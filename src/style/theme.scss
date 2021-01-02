@@ -1,0 +1,21 @@
+@import './fonts.scss';
+
+$light: (
+	'primary-color': #FFF,
+	'secondary-color': #000,
+	'accent-color': #2E53C2,
+	'valid-color': #337533,
+	'invalid-color': #c22b2b,
+	'input-color': #EEE
+);
+$dark: (
+	'primary-color': #101010,
+	'secondary-color': #d8d8d8,
+	'accent-color': #6A84D2,
+	'valid-color': #56B556,
+	'invalid-color': #c22b2b,
+	'input-color': #1C1C1C
+);
+
+$body-font: 'Roboto', monospace;
+$title-font: 'Ubuntu', sans-serif;

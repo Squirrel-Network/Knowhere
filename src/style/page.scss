@@ -1,0 +1,37 @@
+@import './theme.scss';
+
+:root {
+	body.light {
+		--primary-color: #{map-get($light, 'primary-color')};
+		--secondary-color: #{map-get($light, 'secondary-color')};
+		--accent-color: #{map-get($light, 'accent-color')};
+		--valid-color: #{map-get($light, 'valid-color')};
+		--invalid-color: #{map-get($light, 'invalid-color')};
+		--input-color: #{map-get($light, 'input-color')};
+	}
+
+	body.dark {
+		--primary-color: #{map-get($dark, 'primary-color')};
+		--secondary-color: #{map-get($dark, 'secondary-color')};
+		--accent-color: #{map-get($dark, 'accent-color')};
+		--valid-color: #{map-get($dark, 'valid-color')};
+		--invalid-color: #{map-get($dark, 'invalid-color')};
+		--input-color: #{map-get($dark, 'input-color')};
+	}
+
+	--transition-speed: 0.5s;
+}
+
+html, body {
+	width: 100%;
+	height: 100%;
+
+	font-size: 2vw;
+
+	font-family: #{$body-font};
+
+	background-color: var(--primary-color);
+	color: var(--secondary-color);
+
+	transition: var(--transition-speed);
+}
