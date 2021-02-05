@@ -23,7 +23,7 @@ export default class BanServicePlugin {
 	private constructor() {
 	}
 
-	private static BASE_URL = 'https://nebula.hersel.it/blacklist';
+	private static BASE_URL = 'https://api.nebula.squirrel-network.online/blacklist';
 
 	public static install(Vue: any, options: BanServicePluginOptions) {
 		Vue.prototype.banService = new BanServicePlugin();
