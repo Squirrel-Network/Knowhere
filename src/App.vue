@@ -173,6 +173,12 @@ export default class App
 <style lang="scss" scoped>
 @import './style/theme.scss';
 
+main {
+	width: 80%;
+
+	margin: 0 auto;
+}
+
 h1 {
 	text-align: center;
 
