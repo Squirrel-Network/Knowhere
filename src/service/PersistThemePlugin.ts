@@ -104,7 +104,7 @@ export default class PersistThemePlugin {
    * @memberof PersistThemePlugin
    */
   public get currentOptions() : ThemeOptions {
-    return this.themeOptions;
+    return { ...this.themeOptions };
   }
 
   /**
