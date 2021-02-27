@@ -6,10 +6,6 @@ declare module 'vue/types/vue' {
 	}
 }
 
-type BanError =
-	{ error: String
-  }
-  
 export type ThemeOptions = 
   {
     isDarkTheme?: boolean;
