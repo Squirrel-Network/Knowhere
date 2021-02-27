@@ -1,4 +1,4 @@
 - [x] Github repository
 - [x] Basic functionality
-- [ ] Saving theme preference in local db
+- [x] Saving theme preference in local db
 - [ ] Localization

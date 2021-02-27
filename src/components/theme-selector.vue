@@ -19,29 +19,37 @@ import MoonKnob from '@/assets/moon.svg';
 import SunKnob from '@/assets/sun.svg';
 
 @Component({
-	data() {
-		return {
-			isDarkTheme: false,
-		}
-	}
 })
 export default class ThemeSelector
 	extends Vue {
 
+	public isDarkTheme: boolean = false;
+
+	mounted() {
+		this.isDarkTheme = this.persistThemeService.currentOptions.isDarkTheme ?? false;
+		this.applyTheme();
+	}
+
 	get knobImage() {
-		return this.$data.isDarkTheme
+		return this.isDarkTheme
 			? MoonKnob
 			: SunKnob
 			;
 	}
 
-	public toggleTheme() {
-		this.$data.isDarkTheme = !this.$data.isDarkTheme;
-
-		document.body.className = this.$data.isDarkTheme
+	public applyTheme() {
+		document.body.className = this.isDarkTheme
 			? 'dark'
 			: 'light'
 			;
+	}
+
+	public toggleTheme() {
+		this.isDarkTheme = !this.isDarkTheme;
+		this.persistThemeService.updateOptions({
+			isDarkTheme: this.isDarkTheme
+		});
+		this.applyTheme();
 	}
 }
 </script>

@@ -69,10 +69,17 @@ import { switchMap, tap, throttleTime } from 'rxjs/operators';
 import ThemeSelector from '@/components/theme-selector.vue';
 import SearchInput from '@/components/search-input.vue';
 
-import BanServicePlugin from '@/service/BanServicePlugin';
+//import { BanServicePlugin/*, PersistThemePlugin, PersistThemePluginOptions, PersistThemePluginOptionsStoreType*/ } from '@/service';
 import { Ban } from '@/model/Ban';
+import { 
+	BanServicePlugin, 
+	PersistThemePlugin, PersistThemePluginOptions, PersistThemePluginOptionsStoreType 
+} from '@/service';
 
 Vue.use(BanServicePlugin);
+Vue.use(PersistThemePlugin, {
+	storeType: PersistThemePluginOptionsStoreType.LOCALSTORAGE
+} as PersistThemePluginOptions);
 
 @Component({
 	data() {
