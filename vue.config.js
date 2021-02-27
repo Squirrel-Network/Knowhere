@@ -14,5 +14,13 @@ module.exports = {
 
 				return args;
 			});
+
+		// Prevents safari caching
+		if (process.env.NODE_ENV === 'development') {
+			config.plugins.delete('preload')
+			config.output
+				.filename('[name].[hash].js') 
+				.end() 
+		}
 	}
 }
