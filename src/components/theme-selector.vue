@@ -26,7 +26,19 @@ export default class ThemeSelector
 	public isDarkTheme: boolean = false;
 
 	mounted() {
-		this.isDarkTheme = this.persistThemeService.currentOptions.isDarkTheme ?? false;
+		const maybeIsDarkTheme =
+			this.persistThemeService.currentOptions.isDarkTheme !== undefined;
+
+		if (maybeIsDarkTheme) {
+			this.isDarkTheme =
+				<boolean>this.persistThemeService.currentOptions.isDarkTheme;
+		}
+		else {
+			this.isDarkTheme =
+				window.matchMedia
+				&& window.matchMedia('(prefers-color-scheme: dark)').matches;
+		}
+
 		this.applyTheme();
 	}
 
