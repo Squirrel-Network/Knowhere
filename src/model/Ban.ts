@@ -17,7 +17,7 @@ class Ban {
 		private tg_id: string,
 		date: string)
 	{
-		this.date = DateTime.fromHTTP(date);
+		this.date = DateTime.fromISO(date);
 	}
 
 	public static of(
