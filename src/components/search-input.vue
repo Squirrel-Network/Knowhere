@@ -25,10 +25,10 @@ export default class SearchInput
 	}
 
 	public search(event: InputEvent) {
-		this.isValidSearch(event.data as string)
+		this.isValidSearch((event.target as HTMLInputElement).value as string || '')
 			&& this.$emit(
 				'input',
-				(event.srcElement as HTMLInputElement).value
+				(event.target as HTMLInputElement).value
 			);
 	}
 }
