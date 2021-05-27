@@ -23,7 +23,7 @@ export default class BanServicePlugin {
 	private constructor() {
 	}
 
-	private static BASE_URL = 'https://api.nebula.squirrel-network.online/blacklist';
+	private static BASE_URL = 'https://api.nebula.squirrel-network.online/v1';
 
 	public static install(Vue: any, options: BanServicePluginOptions) {
 		Vue.prototype.banService = new BanServicePlugin();
@@ -31,9 +31,9 @@ export default class BanServicePlugin {
 
 	public fetchBanByTgId(tgid: string): Observable<BanModel & BanError> {
 		return Axios.get(
-				BanServicePlugin.BASE_URL,
-				{ method: 'GET'
-				, params: { tgid }
+				`${BanServicePlugin.BASE_URL}/blacklist/${tgid}`,
+				{ 
+					method: 'GET'
 				}
 			)
 			.pipe(pluck('data'));
