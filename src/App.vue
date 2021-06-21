@@ -81,6 +81,12 @@ Vue.use(PersistThemePlugin, {
 	storeType: PersistThemePluginOptionsStoreType.LOCALSTORAGE
 } as PersistThemePluginOptions);
 
+/**
+ * Describes the query parameter name expected in order to automatically fill
+ * the search box and display a result.
+ */
+const QUERYPARAM_SEARCH_KEY = 'q';
+
 @Component({
 	data() {
 		return {
@@ -100,6 +106,21 @@ export default class App
 
 	private subSearchTermsChange = new Subject;
 	private $search!: Subscription;
+
+	/**
+	 * Checks whether there is a query param supported for automatic search.
+	 * If any is available, it automatically performs the `search` function.
+	 */
+	private autosearchFromQueryParams(): void {
+		const uri = window.location.search.substring(1); 
+		const params = new URLSearchParams(uri);
+		for (const [key, value] of params.entries()) {
+			if (key === QUERYPARAM_SEARCH_KEY && value) {
+				this.$data.searchTerms = value;
+				this.search();
+			}
+		}
+	}
 
 	public get invalidText() {
 		return 'Search term must be a Telegram user id.'
@@ -151,6 +172,7 @@ export default class App
 	}
 
 	public mounted() {
+		this.autosearchFromQueryParams();
 	}
 
 	public created() {
