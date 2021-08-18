@@ -30,8 +30,6 @@ html, body {
 
 	font-family: #{$body-font};
 
-	background-color: var(--primary-color);
-	color: var(--secondary-color);
 
 	transition: var(--transition-speed);
 }
