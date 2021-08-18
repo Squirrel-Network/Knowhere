@@ -1,27 +1,36 @@
 <template>
 	<main>
-		<header>
-			<h1>KNOWHERE</h1>
+		<div class="bg">
+		<div class="main-content">
+				<header>
+			<h1 class="text-center">Knowhere</h1>
 		</header>
+
 		<div class="container-fluid search">
+			<h2 class="text-center h5">
+				Nebula's blacklist database
+			</h2>
 			<search-input
 				v-model="searchTerms"
 				@input="search()"
 			/>
+
 			<div class="search-status">
-				<span v-if="isInvalidText" class="invalid-text">
+				<span v-if="isInvalidText" class="invalid-text h5">
 					{{ invalidText }}
 				</span>
-				<span v-if="isValidText" class="valid-text">
+				<span v-if="isValidText" class="valid-text h5">
 					{{ validText }}
 				</span>
-				<span v-if="isLoadingText" class="loading-text">
+				<span v-if="isLoadingText" class="loading-text h5">
 					{{ loadingText }}
 				</span>
-				<span v-if="isLoadingErrorText" class="invalid-text">
+				<span v-if="isLoadingErrorText" class="invalid-text h5">
 					{{ loadingErrorText }}
 				</span>
 			</div>
+
+			<theme-selector />
 		</div>
 		<div
 			v-if="results !== null && searchTerms.length > 0"
@@ -55,9 +64,16 @@
 					</tr>
 				</tbody>
 			</table>
+
+		</div>
 		</div>
 
-		<theme-selector />
+		<div class="copyright fixed-bottom">
+			<p class="text-center">
+				Copyright | Copyright
+			</p>
+		</div>
+	  </div>
 	</main>
 </template>
 
@@ -93,7 +109,8 @@ const QUERYPARAM_SEARCH_KEY = 'q';
 			results: null,
 			searchTerms: '',
 			loadingError: null,
-			isLoadingSearch: false
+			isLoadingSearch: false,
+			show: false
 		}
 	},
 	components: {
@@ -146,10 +163,12 @@ export default class App
 	}
 
 	public isValidSearch() {
+		this.$data.show = true
 		return /^-?[0-9]+$/.test(this.$data.searchTerms);
 	}
 
 	private showResults(results: Ban) {
+		this.$data.show = true
 		this.$data.isLoadingSearch = false;
 		this.$data.loadingError = null;
 
@@ -157,12 +176,15 @@ export default class App
 	}
 
 	private showErrors(error: any) {
+		this.$data.show = true
 		this.$data.isLoadingSearch = false;
 
 		this.$data.loadingError = error;
 	}
 
 	private showFail(fail: Error) {
+		this.$data.show = true
+		this.$data.error = true;
 		this.$data.isLoadingSearch = false;
 
 		console.error(fail);
@@ -202,25 +224,51 @@ export default class App
 <style lang="scss" scoped>
 @import './style/theme.scss';
 
-main {
-	width: 80%;
+@mixin background-property {
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;
+}
 
+@mixin flex {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.bg {
+	@include background-property();
+	background-image: url('assets/aurora-light-23september.jpg');
+	min-height: 100vh;
+	width: 100%;
+	position: relative;
+}
+.main-content {
+	width: 80%;
 	margin: 0 auto;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%,-50%);
 }
 
 h1 {
-	text-align: center;
-
-	font-size: 4em;
-	font-weight: 600;
+	font-size: 2.5em;
+	font-weight: 400;
 
 	font-family: #{$title-font};
+
+	color: var(--primary-color);
 }
 
 div.container-fluid.search {
 	padding: 1%;
+	background-color: var(--primary-color);
 }
 
+h2 {
+	color: var(--secondary-color);
+}
 div.container-fluid.table {
 	& > table {
 		width: 100%;
@@ -252,5 +300,11 @@ div.container-fluid.table {
 			font-style: italic;
 		}
 	}
+}
+
+.copyright {
+	background: var(--primary-color);
+	width: 100%;
+	color: var(--secondary-color);
 }
 </style>
