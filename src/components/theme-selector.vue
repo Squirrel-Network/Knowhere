@@ -124,7 +124,7 @@ div.theme-selector {
 		display: none;
 
 		& + span.switch-knob {
-			transition: 1.5s;
+			transition: 0.5s; //change for delay
 
 			position: absolute;
 			left: 0.2rem;

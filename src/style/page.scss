@@ -8,6 +8,7 @@
 		--valid-color: #{map-get($light, 'valid-color')};
 		--invalid-color: #{map-get($light, 'invalid-color')};
 		--input-color: #{map-get($light, 'input-color')};
+		--background-image: #{map-get($light, 'background-image')};
 	}
 
 	body.dark {
@@ -17,9 +18,10 @@
 		--valid-color: #{map-get($dark, 'valid-color')};
 		--invalid-color: #{map-get($dark, 'invalid-color')};
 		--input-color: #{map-get($dark, 'input-color')};
+		--background-image: #{map-get($dark, 'background-image')};
 	}
 
-	--transition-speed: 0.5s;
+	--transition-speed: 0.1s;
 }
 
 html, body {

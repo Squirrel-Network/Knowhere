@@ -6,7 +6,8 @@ $light: (
 	'accent-color': #2E53C2,
 	'valid-color': #337533,
 	'invalid-color': #c22b2b,
-	'input-color': #EEE
+	'input-color': #EEE,
+	'background-image': url('../assets/aurora-light-23september.jpg')
 );
 $dark: (
 	'primary-color': #101010,
@@ -14,7 +15,8 @@ $dark: (
 	'accent-color': #6A84D2,
 	'valid-color': #56B556,
 	'invalid-color': #c22b2b,
-	'input-color': #1C1C1C
+	'input-color': #1C1C1C,
+	'background-image': url('../assets/aurora-dark-24september.jpg')
 );
 
 $body-font: 'Noto Sans', sans-serif;

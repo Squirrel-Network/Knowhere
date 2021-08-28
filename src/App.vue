@@ -3,7 +3,7 @@
 		<div class="bg">
 		<div class="main-content">
 				<header>
-			<h1 class="text-center">Knowhere</h1>
+			<h1 class="text-center display-4">Knowhere</h1>
 		</header>
 
 		<div class="container-fluid search">
@@ -15,7 +15,7 @@
 				@input="search()"
 			/>
 
-			<div class="search-status">
+			<div class="search-status mx-5">
 				<span v-if="isInvalidText" class="invalid-text h5">
 					{{ invalidText }}
 				</span>
@@ -69,7 +69,7 @@
 		</div>
 
 		<div class="copyright fixed-bottom">
-			<p class="text-center">
+			<p class="text-center h4">
 				Copyright | Copyright
 			</p>
 		</div>
@@ -238,7 +238,7 @@ export default class App
 
 .bg {
 	@include background-property();
-	background-image: url('assets/aurora-light-23september.jpg');
+	background-image: var(--background-image);
 	min-height: 100vh;
 	width: 100%;
 	position: relative;
@@ -253,7 +253,6 @@ export default class App
 }
 
 h1 {
-	font-size: 2.5em;
 	font-weight: 400;
 
 	font-family: #{$title-font};
