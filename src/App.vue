@@ -65,6 +65,7 @@
 import { Component, Vue } from 'vue-property-decorator';
 import { Subject, Subscription } from 'rxjs';
 import { switchMap, tap, throttleTime } from 'rxjs/operators';
+	import { AxiosError } from 'axios';
 
 import ThemeSelector from '@/components/theme-selector.vue';
 import SearchInput from '@/components/search-input.vue';
@@ -75,6 +76,8 @@ import {
 	BanServicePlugin, 
 	PersistThemePlugin, PersistThemePluginOptions, PersistThemePluginOptionsStoreType 
 } from '@/service';
+import { isAxiosError } from '@/utils';
+
 
 Vue.use(BanServicePlugin);
 Vue.use(PersistThemePlugin, {
@@ -162,13 +165,20 @@ export default class App
 		this.$data.loadingError = error;
 	}
 
-	private showFail(fail: Error) {
+	private showFail(fail: Error | AxiosError) {
 		this.$data.isLoadingSearch = false;
 
 		console.error(fail);
 
-		this.$data.loadingError = 'Application error: there was a problem '
+		let errorText = 'Application error: there was a problem '
 			+ 'handling your request. We invite you to reload this page.';
+		if (isAxiosError(fail)) {
+			// In case it is an axios error, print the error received from the
+			// server.
+			errorText = fail.response?.data?.error ?? errorText;
+		}
+
+		this.$data.loadingError = errorText;
 	}
 
 	public mounted() {
