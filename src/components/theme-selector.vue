@@ -70,14 +70,11 @@ export default class ThemeSelector
 div.theme-selector {
 	transition: var(--transition-speed);
 
-	--knob-size: 2.8rem;
+	--knob-size: 1.6rem;
 	--control-length: calc(var(--knob-size) * 2);
-	--control-height: 3.2rem;
-
-	position: absolute;
-	left: calc(50% - var(--control-length) / 2);
-	bottom: 1rem;
-
+	--control-height: 2.0rem;
+	margin: 10px;
+	position: relative;
 	border-radius: var(--knob-size);
 
 	width: var(--control-length);
@@ -100,12 +97,11 @@ div.theme-selector {
 
 	span.knob-image {
 		position: absolute;
-		top: 0.35rem;
-		left: 0.35rem;
+		left: 0.2rem;
 
 		& img {
-			width: 2.1rem;
-			height: 2.1rem;
+			width: 1.2rem;
+			height: 1.2rem;
 		}
 	}
 
@@ -119,6 +115,7 @@ div.theme-selector {
 
 		position: absolute;
 		bottom: 0.2rem;
+		right: 0.5rem;
 
 		cursor: pointer;
 	}
@@ -127,10 +124,10 @@ div.theme-selector {
 		display: none;
 
 		& + span.switch-knob {
-			transition: 1s;
+			transition: 1.5s;
 
 			position: absolute;
-			left: 3%;
+			left: 0.2rem;
 
 			box-shadow: 0.1em 0.1em 0.1em 0 rgba(0, 0, 0, 40%);
 
@@ -143,7 +140,7 @@ div.theme-selector {
 			transition: 1s;
 
 			position: absolute;
-			left: calc(98% - var(--knob-size));
+			left: calc(96% - var(--knob-size));
 
 			box-shadow: none;
 

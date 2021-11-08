@@ -3,7 +3,7 @@
 		type="search"
 		pattern="^-?[0-9]+$"
 		minlength="1"
-		placeholder="Search for id..."
+		placeholder="Enter a telegram id e.g. 233030450"
 		:value="value"
 		@input.stop="search($event)"
 	/>
@@ -37,14 +37,15 @@ export default class SearchInput
 <style lang="scss" scoped>
 input[type="search"] {
 	border: none;
-	border-radius: 10px;
-
+	border-radius: 30px;
+	outline: none;
+	
 	background-color: var(--input-color);
 	color: var(--secondary-color);
 
 	width: 100%;
 
-	font-size: 2em;
+	font-size: 1.2em;
 	font-weight: 100;
 
 	text-align: center;
