@@ -7,16 +7,24 @@ $light: (
 	'valid-color': #337533,
 	'invalid-color': #c22b2b,
 	'input-color': #EEE,
-	'background-image': url('../assets/aurora-light-23september.jpg')
+	'background-image': url('../assets/aurora-light-23september.jpg'),
+	'box-background': #ffffff88,
+	'th-even': #B3E3ED,
+	'th-odd': #8FD2DA,
+	'button-gradient': linear-gradient(45deg, #20A2DD,#70EDEE)
 );
 $dark: (
 	'primary-color': #101010,
-	'secondary-color': #d8d8d8,
+	'secondary-color': #ffffff,
 	'accent-color': #6A84D2,
 	'valid-color': #56B556,
 	'invalid-color': #c22b2b,
 	'input-color': #1C1C1C,
-	'background-image': url('../assets/aurora-dark-24september.jpg')
+	'background-image': url('../assets/aurora-dark-24september.jpg'),
+	'box-background': #24233188,
+	'th-even': #49464D,
+	'th-odd': #2D2B39,
+	'button-gradient': linear-gradient(45deg, #8726E5,#A149EB)
 );
 
 $body-font: 'Noto Sans', sans-serif;

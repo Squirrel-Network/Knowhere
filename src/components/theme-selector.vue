@@ -74,6 +74,7 @@ div.theme-selector {
 	--control-length: calc(var(--knob-size) * 2);
 	--control-height: 2.0rem;
 	margin: 10px;
+	margin-left: 34em;
 	position: relative;
 	border-radius: var(--knob-size);
 
@@ -88,7 +89,7 @@ div.theme-selector {
 		}
 	}
 	&.dark {
-		background-color: #1C1C1C;
+		background-color: #424242;
 
 		& span.switch-knob {
 			background-color: #8C8C8C;

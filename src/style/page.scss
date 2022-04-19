@@ -9,6 +9,10 @@
 		--invalid-color: #{map-get($light, 'invalid-color')};
 		--input-color: #{map-get($light, 'input-color')};
 		--background-image: #{map-get($light, 'background-image')};
+		--box-background: #{map-get($light, 'box-background')};
+		--th-odd: #{map-get($light, 'th-odd')};
+		--th-even: #{map-get($light, 'th-even')};
+		--button-gradient: #{map-get($light, 'button-gradient')};
 	}
 
 	body.dark {
@@ -19,6 +23,12 @@
 		--invalid-color: #{map-get($dark, 'invalid-color')};
 		--input-color: #{map-get($dark, 'input-color')};
 		--background-image: #{map-get($dark, 'background-image')};
+		--box-background: #{map-get($dark, 'box-background')};
+		--th-odd: #{map-get($dark, 'th-odd')};
+		--th-even: #{map-get($dark, 'th-even')};
+		--button-gradient: #{map-get($dark, 'button-gradient')};
+
+
 	}
 
 	--transition-speed: 0.1s;
