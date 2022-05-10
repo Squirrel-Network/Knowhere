@@ -3,19 +3,20 @@
 		<div class="bg">
 		<div class="main-content">
 				<header>
-			<h1 class="text-center">Knowhere</h1>
+			<h1 class="text-center h1">Knowhere</h1>
 		</header>
 
-		<div class="container-fluid search">
-			<h2 class="text-center h5">
+		<div class="container-fluid search p-4">
+			<h2 class="text-center h5 mb-3">
 				Nebula's blacklist database
 			</h2>
 			<search-input
 				v-model="searchTerms"
 				@input="search()"
+				class="mb-3"
 			/>
 
-			<div class="search-status">
+			<div class="search-status mx-5">
 				<span v-if="isInvalidText" class="invalid-text h5">
 					{{ invalidText }}
 				</span>
@@ -30,47 +31,46 @@
 				</span>
 			</div>
 
+			<div
+	v-if="results !== null && searchTerms.length > 0"
+	class="container-fluid table"
+>
+	<table>
+		<thead>
+			<tr>
+				<th class="h6">ID Operator</th>
+				<th class="h6">ID User</th>
+				<th class="h6">Reason</th>
+				<th class="h6">Date</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>
+					{{ results.getOperator() }}
+				</td>
+				<td>
+					{{ results.getTgId() }}
+				</td>
+				<td>
+					{{ results.getReason() }}
+				</td>
+				<td>
+					{{ results.getDateTimeLocaleString() }}
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+
 			<theme-selector />
 		</div>
-		<div
-			v-if="results !== null && searchTerms.length > 0"
-			class="container-fluid table"
-		>
-			<table>
-				<caption>Search results</caption>
 
-				<thead>
-					<tr>
-						<th>ID Operator</th>
-						<th>ID User</th>
-						<th>Reason</th>
-						<th>Date</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td>
-							{{ results.getOperator() }}
-						</td>
-						<td>
-							{{ results.getTgId() }}
-						</td>
-						<td>
-							{{ results.getReason() }}
-						</td>
-						<td>
-							{{ results.getDateTimeLocaleString() }}
-						</td>
-					</tr>
-				</tbody>
-			</table>
-
-		</div>
 		</div>
 
 		<div class="copyright fixed-bottom">
-			<p class="text-center">
-				Copyright | Copyright
+			<p class="text-center p-1">
+				Copyright Squirrel Network 2018 - {{ year }}
 			</p>
 		</div>
 	  </div>
@@ -113,7 +113,8 @@ const QUERYPARAM_SEARCH_KEY = 'q';
 			searchTerms: '',
 			loadingError: null,
 			isLoadingSearch: false,
-			show: false
+			show: false,
+			year: new Date().getFullYear()
 		}
 	},
 	components: {
@@ -232,6 +233,9 @@ export default class App
 <style lang="scss" scoped>
 @import './style/theme.scss';
 
+.invalid-text {
+	color: var(--invalid-color);
+}
 @mixin background-property {
 	background-size: cover;
 	background-position: center;
@@ -246,7 +250,7 @@ export default class App
 
 .bg {
 	@include background-property();
-	background-image: url('assets/aurora-light-23september.jpg');
+	background-image: var(--background-image);
 	min-height: 100vh;
 	width: 100%;
 	position: relative;
@@ -255,23 +259,40 @@ export default class App
 	width: 80%;
 	margin: 0 auto;
 	position: absolute;
-	top: 50%;
+	top: 45%;
 	left: 50%;
 	transform: translate(-50%,-50%);
 }
 
 h1 {
-	font-size: 2.5em;
 	font-weight: 400;
 
 	font-family: #{$title-font};
 
-	color: var(--primary-color);
+	color: #ffffff;
 }
 
+td,tr, th {
+	color: var(--secondary-color);
+	text-align: center;
+}
+th {
+	width: 25%;
+}
+th:nth-child(odd) {
+	background-color: var(--th-odd);
+}
+
+td {
+	font-size: 0.8rem;
+}
+
+th:nth-child(even) {
+	background-color: var(--th-even);
+}
 div.container-fluid.search {
-	padding: 1%;
-	background-color: var(--primary-color);
+	background-color: var(--box-background);
+	border-radius: 5px;
 }
 
 h2 {
@@ -314,5 +335,10 @@ div.container-fluid.table {
 	background: var(--primary-color);
 	width: 100%;
 	color: var(--secondary-color);
+	height: 2rem;
+}
+
+.copyright p{
+	font-size: 0.8rem;
 }
 </style>
