@@ -5,6 +5,9 @@ type BanModel =
 	, reason: string
 	, tg_id: string
 	, date: string
+	, operatorfirstname: string
+	, operatorusername: string
+	, tg_firstname: string
 	}
 	;
 
@@ -12,8 +15,11 @@ class Ban {
 	private date: DateTime;
 
 	public constructor(
+		private operatorfirstname: string,
 		private operator: string,
+		private operatorusername: string,
 		private reason: string,
+		private tg_firstname: string,
 		private tg_id: string,
 		date: string)
 	{
@@ -22,18 +28,30 @@ class Ban {
 
 	public static of(
 		{ date
+		, operatorfirstname
 		, operator
+		, operatorusername
+		, tg_firstname
 		, tg_id
 		, reason }: BanModel) {
 
-		return new Ban(operator, reason, tg_id, date);
+		return new Ban(operatorfirstname,operator,operatorusername,tg_firstname, reason, tg_id, date);
 	}
 
+	public getOperatorFirstname() {
+		return this.operatorfirstname;
+	}
 	public getOperator() {
 		return this.operator;
 	}
+	public getOperatorUserName() {
+		return this.operatorusername;
+	}
 	public getReason() {
 		return this.reason;
+	}
+	public getTgFirstname() {
+		return this.tg_firstname;
 	}
 	public getTgId() {
 		return this.tg_id;

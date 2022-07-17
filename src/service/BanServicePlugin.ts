@@ -32,7 +32,7 @@ export default class BanServicePlugin {
 	public fetchBanByTgId(tgid: string): Observable<BanModel & BanError> {
 		return Axios.get(
 				`${BanServicePlugin.BASE_URL}/blacklist/${tgid}`,
-				{ 
+				{
 					method: 'GET'
 				}
 			)

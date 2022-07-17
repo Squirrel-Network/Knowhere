@@ -39,7 +39,7 @@ input[type="search"] {
 	border: none;
 	border-radius: 30px;
 	outline: none;
-	
+
 	background-color: var(--input-color);
 	color: var(--secondary-color);
 

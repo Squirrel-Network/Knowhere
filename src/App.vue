@@ -41,8 +41,11 @@
 
 				<thead>
 					<tr>
-						<th>ID Operator</th>
-						<th>ID User</th>
+						<th>TgID Operator</th>
+						<th>FirstName Operator</th>
+						<th>Username Operator</th>
+						<th>FirstName User</th>
+						<th>TgID User</th>
 						<th>Reason</th>
 						<th>Date</th>
 					</tr>
@@ -51,6 +54,15 @@
 					<tr>
 						<td>
 							{{ results.getOperator() }}
+						</td>
+						<td>
+							{{ results.getOperatorFirstname() }}
+						</td>
+						<td>
+							{{ results.getOperatorUserName() }}
+						</td>
+						<td>
+							{{ results.getTgFirstname }}
 						</td>
 						<td>
 							{{ results.getTgId() }}
