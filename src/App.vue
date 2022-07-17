@@ -62,7 +62,7 @@
 							{{ results.getOperatorUserName() }}
 						</td>
 						<td>
-							{{ results.getTgFirstname }}
+							{{ results.getTgFirstname() }}
 						</td>
 						<td>
 							{{ results.getTgId() }}
