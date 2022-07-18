@@ -33,34 +33,24 @@
 
 			<div
 	v-if="results !== null && searchTerms.length > 0"
-	class="container-fluid table"
->
-	<table>
-		<thead>
-			<tr>
-				<th class="h6">ID Operator</th>
-				<th class="h6">ID User</th>
-				<th class="h6">Reason</th>
-				<th class="h6">Date</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr>
-				<td>
-					{{ results.getOperator() }}
-				</td>
-				<td>
-					{{ results.getTgId() }}
-				</td>
-				<td>
-					{{ results.getReason() }}
-				</td>
-				<td>
-					{{ results.getDateTimeLocaleString() }}
-				</td>
-			</tr>
-		</tbody>
-	</table>
+	class="container-fluid table">
+
+<div class="card">
+  <div class="card-body">
+    <h5 class="card-title">🚷 Blacklisted User:<br>FirstName: {{ results.getTgFirstname() }}<br>Telegram Id: [<code>{{ results.getTgId() }}</code>]</h5>
+  </div>
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item"><b>👮‍♀️ By Operator:</b> <br> FirstName: {{ results.getOperatorFirstname() }}<br>Telegram Id: [<code>{{ results.getOperator() }}</code>]
+	<br>Username: {{ results.getOperatorUserName() }}
+	</li>
+    <li class="list-group-item">📜 <b>Reason:</b> {{ results.getReason() }}</li>
+    <li class="list-group-item">🕐 <b>Date:</b> {{ results.getDateTimeLocaleString() }} (UTC)</li>
+  </ul>
+  <div class="card-body">
+    <a href="https://t.me/nebulabot_support" class="card-link">Wrong Blacklist? Contact Us</a>
+  </div>
+</div>
+
 </div>
 
 			<theme-selector />
@@ -70,7 +60,7 @@
 
 		<div class="copyright fixed-bottom">
 			<p class="text-center p-1">
-				Copyright Squirrel Network 2018 - {{ year }}
+				Copyright &copy; Squirrel Network 2018 - {{ year }} || <a href="https://api.nebula.squirrel-network.online/">API</a>
 			</p>
 		</div>
 	  </div>
@@ -88,9 +78,9 @@ import SearchInput from '@/components/search-input.vue';
 
 //import { BanServicePlugin/*, PersistThemePlugin, PersistThemePluginOptions, PersistThemePluginOptionsStoreType*/ } from '@/service';
 import { Ban } from '@/model/Ban';
-import { 
-	BanServicePlugin, 
-	PersistThemePlugin, PersistThemePluginOptions, PersistThemePluginOptionsStoreType 
+import {
+	BanServicePlugin,
+	PersistThemePlugin, PersistThemePluginOptions, PersistThemePluginOptionsStoreType
 } from '@/service';
 import { isAxiosError } from '@/utils';
 
@@ -256,7 +246,7 @@ export default class App
 	position: relative;
 }
 .main-content {
-	width: 80%;
+	width: 90%;
 	margin: 0 auto;
 	position: absolute;
 	top: 45%;
@@ -277,6 +267,7 @@ td,tr, th {
 	text-align: center;
 }
 th {
+	font-size: 0.8rem;
 	width: 25%;
 }
 th:nth-child(odd) {
@@ -300,8 +291,6 @@ h2 {
 }
 div.container-fluid.table {
 	& > table {
-		width: 100%;
-
 		font-weight: 300;
 
 		thead {
