@@ -111,7 +111,7 @@ const QUERYPARAM_SEARCH_KEY = 'q';
 export default class App
 	extends Vue {
 
-	private subSearchTermsChange = new Subject;
+	private subSearchTermsChange = new Subject();
 	private $search!: Subscription;
 
 	/**
@@ -149,7 +149,7 @@ export default class App
 	public search() {
 		this.$data.results = null;
 
-		this.subSearchTermsChange.next();
+		this.subSearchTermsChange.next(void 0);
 	}
 
 	public isValidSearch() {
@@ -182,7 +182,7 @@ export default class App
 		if (isAxiosError(fail)) {
 			// In case it is an axios error, print the error received from the
 			// server.
-			errorText = fail.response?.data?.error ?? errorText;
+			errorText = (fail.response?.data as any)?.error ?? errorText;
 		}
 
 		this.$data.loadingError = errorText;
