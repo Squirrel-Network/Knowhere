@@ -1,63 +1,77 @@
 import { DateTime } from 'luxon';
 
 type BanModel =
-	{ operator: string
-	, reason: string
-	, tg_id: string
-	, date: string
-	, operatorfirstname: string
-	, operatorusername: string
-	, tg_firstname: string
-	}
-	;
+	{ readonly id: number
+	, readonly user_id: number
+	, readonly user_first_name: string
+	, readonly motivation_text: string
+	, readonly user_date: string
+	, readonly id_operator: number
+	, readonly username_operator: string
+	, readonly first_name_operator: string
+	};
 
 class Ban {
 	private date: DateTime;
 
 	public constructor(
-		private operatorfirstname: string,
-		private operator: string,
-		private operatorusername: string,
-		private reason: string,
-		private tg_firstname: string,
-		private tg_id: string,
-		date: string)
-	{
-		this.date = DateTime.fromISO(date);
+		private id: number,
+		private userId: number,
+		private userFirstName: string,
+		private motivationText: string,
+		userDate: string,
+		private idOperator: number,
+		private usernameOperator: string,
+		private firstNameOperator: string
+	) {
+		this.date = DateTime.fromISO(userDate);
 	}
 
 	public static of(
-		{ date
-		, operatorfirstname
-		, operator
-		, operatorusername
-		, tg_firstname
-		, tg_id
-		, reason }: BanModel) {
+		{ id
+		, user_id
+		, motivation_text
+		, user_first_name
+		, first_name_operator
+		, username_operator
+		, user_date
+		, id_operator
+		}: BanModel) {
 
-		return new Ban(operatorfirstname,operator,operatorusername,tg_firstname, reason, tg_id, date);
+		return new Ban(
+			id,
+			user_id,
+			user_first_name,
+			motivation_text,
+			user_date,
+			id_operator,
+			username_operator,
+			first_name_operator
+		);
 	}
 
-	public getOperatorFirstname() {
-		return this.operatorfirstname;
+	public getUserFirstName() {
+		return this.userFirstName;
 	}
-	public getOperator() {
-		return this.operator;
+
+	public getUserId() {
+		return this.userId;
 	}
+
+	public getOperatorFirstName() {
+		return this.firstNameOperator;
+	}
+
+	public getOperatorId() {
+		return this.idOperator;
+	}
+
 	public getOperatorUserName() {
-		return this.operatorusername;
+		return this.usernameOperator;
 	}
+
 	public getReason() {
-		return this.reason;
-	}
-	public getTgFirstname() {
-		return this.tg_firstname;
-	}
-	public getTgId() {
-		return this.tg_id;
-	}
-	public getDate() {
-		return this.date;
+		return this.motivationText;
 	}
 
 	public getDateTimeLocaleString() {

@@ -1,91 +1,67 @@
 <template>
 	<main>
 		<div class="bg">
-		<div class="main-content">
+			<div class="main-content">
 				<header>
-			<h1 class="text-center">Knowhere</h1>
-		</header>
+					<h1 class="text-center h1">Knowhere</h1>
+				</header>
 
-		<div class="container-fluid search">
-			<h2 class="text-center h5">
-				Nebula's blacklist database
-			</h2>
-			<search-input
-				v-model="searchTerms"
-				@input="search()"
-			/>
+				<div class="container-fluid search p-4">
+					<h2 class="text-center h5 mb-3">
+						Nebula's blacklist database
+					</h2>
+					<search-input
+						v-model="searchTerms"
+						@input="search()"
+						class="mb-3"
+					/>
 
-			<div class="search-status">
-				<span v-if="isInvalidText" class="invalid-text h5">
-					{{ invalidText }}
-				</span>
-				<span v-if="isValidText" class="valid-text h5">
-					{{ validText }}
-				</span>
-				<span v-if="isLoadingText" class="loading-text h5">
-					{{ loadingText }}
-				</span>
-				<span v-if="isLoadingErrorText" class="invalid-text h5">
-					{{ loadingErrorText }}
-				</span>
+					<div class="search-status mx-5">
+						<span v-if="isInvalidText" class="invalid-text h5">
+							{{ invalidText }}
+						</span>
+						<span v-if="isValidText" class="valid-text h5">
+							{{ validText }}
+						</span>
+						<span v-if="isLoadingText" class="loading-text h5">
+							{{ loadingText }}
+						</span>
+						<span v-if="isLoadingErrorText" class="invalid-text h5">
+							{{ loadingErrorText }}
+						</span>
+					</div>
+
+					<div
+						v-if="results !== null && searchTerms.length > 0"
+						class="container-fluid table">
+						<div class="card">
+							<div class="card-body">
+								<h5 class="card-title">🚷 Blacklisted User:<br>FirstName: {{ results.getUserFirstName() }}<br>Telegram Id: [<code>{{ results.getUserId() }}</code>]</h5>
+							</div>
+							<ul class="list-group list-group-flush">
+								<li class="list-group-item">
+									<b>👮‍ By Operator:</b> <br> FirstName: {{ results.getOperatorFirstName() }}<br>Telegram Id: [<code>{{ results.getOperatorId() }}</code>]
+									<br>Username: {{ results.getOperatorUserName() }}
+								</li>
+								<li class="list-group-item">📜 <b>Reason:</b> {{ results.getReason() }}</li>
+								<li class="list-group-item">🕐 <b>Date:</b> {{ results.getDateTimeLocaleString() }} (UTC)</li>
+							</ul>
+							<div class="card-body">
+								<a href="https://t.me/nebulabot_support" class="card-link">Wrong Blacklist? Contact Us</a>
+							</div>
+						</div>
+					</div>
+
+					<theme-selector />
+				</div>
 			</div>
 
-			<theme-selector />
+			<div class="copyright fixed-bottom">
+				<p class="text-center p-1">
+					Copyright &copy; Squirrel Network 2018 - {{ year }} || <a href="https://api.nebula.squirrel-network.online/">API</a>
+				</p>
+			</div>
 		</div>
-		<div
-			v-if="results !== null && searchTerms.length > 0"
-			class="container-fluid table"
-		>
-			<table>
-				<caption>Search results</caption>
-
-				<thead>
-					<tr>
-						<th>TgID Operator</th>
-						<th>FirstName Operator</th>
-						<th>Username Operator</th>
-						<th>FirstName User</th>
-						<th>TgID User</th>
-						<th>Reason</th>
-						<th>Date</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td>
-							{{ results.getOperator() }}
-						</td>
-						<td>
-							{{ results.getOperatorFirstname() }}
-						</td>
-						<td>
-							{{ results.getOperatorUserName() }}
-						</td>
-						<td>
-							{{ results.getTgFirstname() }}
-						</td>
-						<td>
-							{{ results.getTgId() }}
-						</td>
-						<td>
-							{{ results.getReason() }}
-						</td>
-						<td>
-							{{ results.getDateTimeLocaleString() }}
-						</td>
-					</tr>
-				</tbody>
-			</table>
-
-		</div>
-		</div>
-
-		<div class="copyright fixed-bottom">
-			<p class="text-center">
-				Copyright | Copyright
-			</p>
-		</div>
-	  </div>
 	</main>
 </template>
 
@@ -93,19 +69,17 @@
 import { Component, Vue } from 'vue-property-decorator';
 import { Subject, Subscription } from 'rxjs';
 import { switchMap, tap, throttleTime } from 'rxjs/operators';
-	import { AxiosError } from 'axios';
+import { AxiosError } from 'axios';
 
 import ThemeSelector from '@/components/theme-selector.vue';
 import SearchInput from '@/components/search-input.vue';
 
-//import { BanServicePlugin/*, PersistThemePlugin, PersistThemePluginOptions, PersistThemePluginOptionsStoreType*/ } from '@/service';
 import { Ban } from '@/model/Ban';
-import { 
-	BanServicePlugin, 
-	PersistThemePlugin, PersistThemePluginOptions, PersistThemePluginOptionsStoreType 
+import {
+	BanServicePlugin,
+	PersistThemePlugin, PersistThemePluginOptions, PersistThemePluginOptionsStoreType
 } from '@/service';
 import { isAxiosError } from '@/utils';
-
 
 Vue.use(BanServicePlugin);
 Vue.use(PersistThemePlugin, {
@@ -125,7 +99,8 @@ const QUERYPARAM_SEARCH_KEY = 'q';
 			searchTerms: '',
 			loadingError: null,
 			isLoadingSearch: false,
-			show: false
+			show: false,
+			year: new Date().getFullYear()
 		}
 	},
 	components: {
@@ -136,7 +111,7 @@ const QUERYPARAM_SEARCH_KEY = 'q';
 export default class App
 	extends Vue {
 
-	private subSearchTermsChange = new Subject;
+	private subSearchTermsChange = new Subject();
 	private $search!: Subscription;
 
 	/**
@@ -174,7 +149,7 @@ export default class App
 	public search() {
 		this.$data.results = null;
 
-		this.subSearchTermsChange.next();
+		this.subSearchTermsChange.next(void 0);
 	}
 
 	public isValidSearch() {
@@ -207,7 +182,7 @@ export default class App
 		if (isAxiosError(fail)) {
 			// In case it is an axios error, print the error received from the
 			// server.
-			errorText = fail.response?.data?.error ?? errorText;
+			errorText = (fail.response?.data as any)?.error ?? errorText;
 		}
 
 		this.$data.loadingError = errorText;
@@ -244,6 +219,9 @@ export default class App
 <style lang="scss" scoped>
 @import './style/theme.scss';
 
+.invalid-text {
+	color: var(--invalid-color);
+}
 @mixin background-property {
 	background-size: cover;
 	background-position: center;
@@ -258,32 +236,50 @@ export default class App
 
 .bg {
 	@include background-property();
-	background-image: url('assets/aurora-light-23september.jpg');
+	background-image: var(--background-image);
 	min-height: 100vh;
 	width: 100%;
 	position: relative;
 }
 .main-content {
-	width: 80%;
+	width: 90%;
 	margin: 0 auto;
 	position: absolute;
-	top: 50%;
+	top: 45%;
 	left: 50%;
 	transform: translate(-50%,-50%);
 }
 
 h1 {
-	font-size: 2.5em;
 	font-weight: 400;
 
 	font-family: #{$title-font};
 
-	color: var(--primary-color);
+	color: #ffffff;
 }
 
+td,tr, th {
+	color: var(--secondary-color);
+	text-align: center;
+}
+th {
+	font-size: 0.8rem;
+	width: 25%;
+}
+th:nth-child(odd) {
+	background-color: var(--th-odd);
+}
+
+td {
+	font-size: 0.8rem;
+}
+
+th:nth-child(even) {
+	background-color: var(--th-even);
+}
 div.container-fluid.search {
-	padding: 1%;
-	background-color: var(--primary-color);
+	background-color: var(--box-background);
+	border-radius: 5px;
 }
 
 h2 {
@@ -291,8 +287,6 @@ h2 {
 }
 div.container-fluid.table {
 	& > table {
-		width: 100%;
-
 		font-weight: 300;
 
 		thead {
@@ -326,5 +320,10 @@ div.container-fluid.table {
 	background: var(--primary-color);
 	width: 100%;
 	color: var(--secondary-color);
+	height: 2rem;
+}
+
+.copyright p{
+	font-size: 0.8rem;
 }
 </style>
