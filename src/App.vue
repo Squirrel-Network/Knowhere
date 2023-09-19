@@ -1,69 +1,67 @@
 <template>
 	<main>
 		<div class="bg">
-		<div class="main-content">
+			<div class="main-content">
 				<header>
-			<h1 class="text-center h1">Knowhere</h1>
-		</header>
+					<h1 class="text-center h1">Knowhere</h1>
+				</header>
 
-		<div class="container-fluid search p-4">
-			<h2 class="text-center h5 mb-3">
-				Nebula's blacklist database
-			</h2>
-			<search-input
-				v-model="searchTerms"
-				@input="search()"
-				class="mb-3"
-			/>
+				<div class="container-fluid search p-4">
+					<h2 class="text-center h5 mb-3">
+						Nebula's blacklist database
+					</h2>
+					<search-input
+						v-model="searchTerms"
+						@input="search()"
+						class="mb-3"
+					/>
 
-			<div class="search-status mx-5">
-				<span v-if="isInvalidText" class="invalid-text h5">
-					{{ invalidText }}
-				</span>
-				<span v-if="isValidText" class="valid-text h5">
-					{{ validText }}
-				</span>
-				<span v-if="isLoadingText" class="loading-text h5">
-					{{ loadingText }}
-				</span>
-				<span v-if="isLoadingErrorText" class="invalid-text h5">
-					{{ loadingErrorText }}
-				</span>
+					<div class="search-status mx-5">
+						<span v-if="isInvalidText" class="invalid-text h5">
+							{{ invalidText }}
+						</span>
+						<span v-if="isValidText" class="valid-text h5">
+							{{ validText }}
+						</span>
+						<span v-if="isLoadingText" class="loading-text h5">
+							{{ loadingText }}
+						</span>
+						<span v-if="isLoadingErrorText" class="invalid-text h5">
+							{{ loadingErrorText }}
+						</span>
+					</div>
+
+					<div
+						v-if="results !== null && searchTerms.length > 0"
+						class="container-fluid table">
+						<div class="card">
+							<div class="card-body">
+								<h5 class="card-title">🚷 Blacklisted User:<br>FirstName: {{ results.getTgFirstname() }}<br>Telegram Id: [<code>{{ results.getTgId() }}</code>]</h5>
+							</div>
+							<ul class="list-group list-group-flush">
+								<li class="list-group-item">
+									<b>👮‍ By Operator:</b> <br> FirstName: {{ results.getOperatorFirstname() }}<br>Telegram Id: [<code>{{ results.getOperator() }}</code>]
+									<br>Username: {{ results.getOperatorUserName() }}
+								</li>
+								<li class="list-group-item">📜 <b>Reason:</b> {{ results.getReason() }}</li>
+								<li class="list-group-item">🕐 <b>Date:</b> {{ results.getDateTimeLocaleString() }} (UTC)</li>
+							</ul>
+							<div class="card-body">
+								<a href="https://t.me/nebulabot_support" class="card-link">Wrong Blacklist? Contact Us</a>
+							</div>
+						</div>
+					</div>
+
+					<theme-selector />
+				</div>
 			</div>
 
-			<div
-	v-if="results !== null && searchTerms.length > 0"
-	class="container-fluid table">
-
-<div class="card">
-  <div class="card-body">
-    <h5 class="card-title">🚷 Blacklisted User:<br>FirstName: {{ results.getTgFirstname() }}<br>Telegram Id: [<code>{{ results.getTgId() }}</code>]</h5>
-  </div>
-  <ul class="list-group list-group-flush">
-    <li class="list-group-item"><b>👮‍♀️ By Operator:</b> <br> FirstName: {{ results.getOperatorFirstname() }}<br>Telegram Id: [<code>{{ results.getOperator() }}</code>]
-	<br>Username: {{ results.getOperatorUserName() }}
-	</li>
-    <li class="list-group-item">📜 <b>Reason:</b> {{ results.getReason() }}</li>
-    <li class="list-group-item">🕐 <b>Date:</b> {{ results.getDateTimeLocaleString() }} (UTC)</li>
-  </ul>
-  <div class="card-body">
-    <a href="https://t.me/nebulabot_support" class="card-link">Wrong Blacklist? Contact Us</a>
-  </div>
-</div>
-
-</div>
-
-			<theme-selector />
+			<div class="copyright fixed-bottom">
+				<p class="text-center p-1">
+					Copyright &copy; Squirrel Network 2018 - {{ year }} || <a href="https://api.nebula.squirrel-network.online/">API</a>
+				</p>
+			</div>
 		</div>
-
-		</div>
-
-		<div class="copyright fixed-bottom">
-			<p class="text-center p-1">
-				Copyright &copy; Squirrel Network 2018 - {{ year }} || <a href="https://api.nebula.squirrel-network.online/">API</a>
-			</p>
-		</div>
-	  </div>
 	</main>
 </template>
 
@@ -71,19 +69,17 @@
 import { Component, Vue } from 'vue-property-decorator';
 import { Subject, Subscription } from 'rxjs';
 import { switchMap, tap, throttleTime } from 'rxjs/operators';
-	import { AxiosError } from 'axios';
+import { AxiosError } from 'axios';
 
 import ThemeSelector from '@/components/theme-selector.vue';
 import SearchInput from '@/components/search-input.vue';
 
-//import { BanServicePlugin/*, PersistThemePlugin, PersistThemePluginOptions, PersistThemePluginOptionsStoreType*/ } from '@/service';
 import { Ban } from '@/model/Ban';
 import {
 	BanServicePlugin,
 	PersistThemePlugin, PersistThemePluginOptions, PersistThemePluginOptionsStoreType
 } from '@/service';
 import { isAxiosError } from '@/utils';
-
 
 Vue.use(BanServicePlugin);
 Vue.use(PersistThemePlugin, {
