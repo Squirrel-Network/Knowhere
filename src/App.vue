@@ -36,11 +36,11 @@
 						class="container-fluid table">
 						<div class="card">
 							<div class="card-body">
-								<h5 class="card-title">🚷 Blacklisted User:<br>FirstName: {{ results.getTgFirstname() }}<br>Telegram Id: [<code>{{ results.getTgId() }}</code>]</h5>
+								<h5 class="card-title">🚷 Blacklisted User:<br>FirstName: {{ results.getUserFirstName() }}<br>Telegram Id: [<code>{{ results.getUserId() }}</code>]</h5>
 							</div>
 							<ul class="list-group list-group-flush">
 								<li class="list-group-item">
-									<b>👮‍ By Operator:</b> <br> FirstName: {{ results.getOperatorFirstname() }}<br>Telegram Id: [<code>{{ results.getOperator() }}</code>]
+									<b>👮‍ By Operator:</b> <br> FirstName: {{ results.getOperatorFirstName() }}<br>Telegram Id: [<code>{{ results.getOperatorId() }}</code>]
 									<br>Username: {{ results.getOperatorUserName() }}
 								</li>
 								<li class="list-group-item">📜 <b>Reason:</b> {{ results.getReason() }}</li>
